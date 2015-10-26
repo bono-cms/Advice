@@ -1,38 +1,36 @@
 <?php
 
-use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\Element;
 
 ?>
 
 <form>
 	<div class="well clearfix">
-		
-		<input type="hidden" name="advice[id]" value="<?php echo $advice->getId(); ?>" />
-		
+        <?php echo Element::hidden('advice[id]', $advice->getId()); ?>
+
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="advice[title]" class="form-control" placeholder="<?php $this->show('Advice title'); ?>" value="<?php echo $advice->getTitle(); ?>" />
+                    <?php echo Element::text('advice[title]', $advice->getTitle(), array('class' => 'form-control', 'placeholder' => $this->translate('Advice title'))); ?>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
 			<div class="col-lg-10">
-				<textarea name="advice[content]"><?php echo $advice->getContent(); ?></textarea>
+                <?php echo Element::textarea('advice[content]', $advice->getContent()); ?>
 			</div>
 		</div>
-		
+
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 			<div class="col-lg-10">
-				<?php echo CheckBoxWidget::render(array('name' => 'advice[published]', 'class' => 'form-control'), $advice->getPublished()); ?>
+                <?php echo Element::checkbox('advice[published]', $advice->getPublished(), array('class' => 'form-control')); ?>
 			</div>
 		</div>
-		
 	</div>
 	
 	<?php if ($advice->getId()): ?>

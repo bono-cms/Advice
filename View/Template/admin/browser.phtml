@@ -1,6 +1,6 @@
 <?php
 
-use Krystal\Form\Widget\CheckBoxWidget;
+use Krystal\Form\Element;
 
 ?>
 
@@ -18,10 +18,8 @@ use Krystal\Form\Widget\CheckBoxWidget;
 		 <li><a href="#" data-button="save-changes"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
 		 <li><a href="#" data-button="remove-selected" data-button="remove-selected"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
 		 <?php else: ?>
-
 		 <li class="disabled"><a><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
 		 <li class="disabled"><a><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
-		 
 		 <?php endif; ?>
 	  </ul>
 	</div>
@@ -56,7 +54,7 @@ use Krystal\Form\Widget\CheckBoxWidget;
 					<td class="text-center text-muted"><?php echo $advice->getid(); ?></td>
 					<td class="text-center"><?php echo $advice->getTitle(); ?></td>
 					<td class="text-center">
-						<?php echo CheckBoxWidget::render(array('name' => sprintf('published[%s]', $advice->getId())), $advice->getPublished()); ?>
+                        <?php echo Element::checkbox(sprintf('published[%s]', $advice->getId()), $advice->getPublished()); ?>
 					</td>
 					<td class="text-center">
 						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this advice'); ?>" data-button="edit" href="<?php echo $this->url('Advice:Admin:Edit@indexAction', $advice->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
