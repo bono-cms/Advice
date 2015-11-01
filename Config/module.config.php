@@ -11,9 +11,9 @@
 
 return array(
  'module' => array(
-  'name'	=> 'Advice',
-  'url'	=> '/admin/module/advice',
-  'icon'	=> '/module/Advice/Assets/advice.png',
+  'name'    => 'Advice',
+  'url' => '/admin/module/advice',
+  'icon'    => '/module/Advice/Assets/advice.png',
   'order' => 15,
   'description' => 'Advice module allows you to manage advices on your site'
   )

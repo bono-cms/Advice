@@ -13,50 +13,50 @@ namespace Advice\Controller\Admin;
 
 final class Edit extends AbstractAdvice
 {
-	/**
-	 * Shows edit form
-	 * 
-	 * @param string $id Advice id
-	 * @return string
-	 */
-	public function indexAction($id)
-	{
-		$advice = $this->getAdviceManager()->fetchById($id);
+    /**
+     * Shows edit form
+     * 
+     * @param string $id Advice id
+     * @return string
+     */
+    public function indexAction($id)
+    {
+        $advice = $this->getAdviceManager()->fetchById($id);
 
-		if ($advice !== false) {
-			$this->loadSharedPlugins();
+        if ($advice !== false) {
+            $this->loadSharedPlugins();
 
-			return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-				'title' => 'Edit the advice',
-				'advice' => $advice
-			)));
+            return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+                'title' => 'Edit the advice',
+                'advice' => $advice
+            )));
 
-		} else {
+        } else {
 
-			return false;
-		}
-	}
+            return false;
+        }
+    }
 
-	/**
-	 * Updates an advice
-	 * 
-	 * @return string
-	 */
-	public function updateAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('advice'));
+    /**
+     * Updates an advice
+     * 
+     * @return string
+     */
+    public function updateAction()
+    {
+        $formValidator = $this->getValidator($this->request->getPost('advice'));
 
-		if ($formValidator->isValid()) {
+        if ($formValidator->isValid()) {
 
-			if ($this->getAdviceManager()->update($this->request->getPost('advice'))) {
+            if ($this->getAdviceManager()->update($this->request->getPost('advice'))) {
 
-				$this->flashBag->set('success', 'The advice has been updated successfully');
-				return '1';
-			}
+                $this->flashBag->set('success', 'The advice has been updated successfully');
+                return '1';
+            }
 
-		} else {
+        } else {
 
-			return $formValidator->getErrors();
-		}
-	}
+            return $formValidator->getErrors();
+        }
+    }
 }

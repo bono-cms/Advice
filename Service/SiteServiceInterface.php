@@ -13,18 +13,18 @@ namespace Advice\Service;
 
 interface SiteServiceInterface
 {
-	/**
-	 * Returns random advice entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	public function getRandom();
+    /**
+     * Returns random advice entity
+     * 
+     * @return \Krystal\Stdlib\VirtualEntity
+     */
+    public function getRandom();
 
-	/**
-	 * Finds an advice by its associated id and returns its entity
-	 * 
-	 * @param string $id
-	 * @return \Krystal\Stdlib\VirtualEntity|boolean
-	 */
-	public function getById($id);
+    /**
+     * Finds an advice by its associated id and returns its entity
+     * 
+     * @param string $id
+     * @return \Krystal\Stdlib\VirtualEntity|boolean
+     */
+    public function getById($id);
 }

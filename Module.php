@@ -17,17 +17,17 @@ use Cms\AbstractCmsModule;
 
 final class Module extends AbstractCmsModule
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getServiceProviders()
-	{
-		$adviceManager = new AdviceManager($this->getMapper('/Advice/Storage/MySQL/AdviceMapper'), $this->getHistoryManager());
-		$siteService = new SiteService($adviceManager);
+    /**
+     * {@inheritDoc}
+     */
+    public function getServiceProviders()
+    {
+        $adviceManager = new AdviceManager($this->getMapper('/Advice/Storage/MySQL/AdviceMapper'), $this->getHistoryManager());
+        $siteService = new SiteService($adviceManager);
 
-		return array(
-			'adviceManager' => $adviceManager,
-			'siteService' => $siteService
-		);
-	}
+        return array(
+            'adviceManager' => $adviceManager,
+            'siteService' => $siteService
+        );
+    }
 }

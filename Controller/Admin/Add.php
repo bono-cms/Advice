@@ -15,46 +15,46 @@ use Krystal\Stdlib\VirtualEntity;
 
 final class Add extends AbstractAdvice
 {
-	/**
-	 * Shows adding form
-	 * 
-	 * @return string
-	 */
-	public function indexAction()
-	{
-		$this->loadSharedPlugins();
+    /**
+     * Shows adding form
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        $this->loadSharedPlugins();
 
-		$advice = new VirtualEntity();
-		$advice->setPublished(true);
+        $advice = new VirtualEntity();
+        $advice->setPublished(true);
 
-		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
-			'title' => 'Add an advice',
-			'advice' => $advice
-		)));
-	}
+        return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+            'title' => 'Add an advice',
+            'advice' => $advice
+        )));
+    }
 
-	/**
-	 * Adds an advice
-	 * 
-	 * @return string
-	 */
-	public function addAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('advice'));
+    /**
+     * Adds an advice
+     * 
+     * @return string
+     */
+    public function addAction()
+    {
+        $formValidator = $this->getValidator($this->request->getPost('advice'));
 
-		if ($formValidator->isValid()) {
+        if ($formValidator->isValid()) {
 
-			$adviceManager = $this->getAdviceManager();
+            $adviceManager = $this->getAdviceManager();
 
-			if ($adviceManager->add($this->request->getPost('advice'))) {
+            if ($adviceManager->add($this->request->getPost('advice'))) {
 
-				$this->flashBag->set('success', 'An advice has been created successfully');
-				return $adviceManager->getLastId();
-			}
+                $this->flashBag->set('success', 'An advice has been created successfully');
+                return $adviceManager->getLastId();
+            }
 
-		} else {
+        } else {
 
-			return $formValidator->getErrors();
-		}
-	}
+            return $formValidator->getErrors();
+        }
+    }
 }
