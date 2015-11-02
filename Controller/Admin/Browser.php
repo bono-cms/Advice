@@ -46,16 +46,11 @@ final class Browser extends AbstractAdminController
     private function loadPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/browser.js'));
-        
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'link' => '#',
-                'name' => 'Advice'
-            )
-        ));
+                   ->appendScript('@Advice/admin/browser.js');
+
+        $this->view->getBreadcrumbBag()->addOne('Advice');
     }
-    
+
     /**
      * Save changes
      * 
@@ -64,7 +59,6 @@ final class Browser extends AbstractAdminController
     public function saveAction()
     {
         if ($this->request->hasPost('published')) {
-
             $published = $this->request->getPost('published');
 
             $this->getAdviceManager()->updatePublished($published);
@@ -82,7 +76,6 @@ final class Browser extends AbstractAdminController
     public function deleteAction()
     {
         if ($this->request->hasPost('id')) {
-
             $id = $this->request->getPost('id');
 
             if ($this->getAdviceManager()->deleteById($id)) {
@@ -101,7 +94,6 @@ final class Browser extends AbstractAdminController
     public function deleteSelectedAction()
     {
         if ($this->request->hasPost('toDelete')) {
-
             $ids = array_keys($this->request->getPost('toDelete'));
             $this->getAdviceManager()->deleteByIds($ids);
 

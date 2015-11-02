@@ -27,10 +27,12 @@ final class Add extends AbstractAdvice
         $advice = new VirtualEntity();
         $advice->setPublished(true);
 
-        return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+        $this->loadBreadcrumbs('Add an advice');
+
+        return $this->view->render($this->getTemplatePath(), array(
             'title' => 'Add an advice',
             'advice' => $advice
-        )));
+        ));
     }
 
     /**
@@ -43,17 +45,14 @@ final class Add extends AbstractAdvice
         $formValidator = $this->getValidator($this->request->getPost('advice'));
 
         if ($formValidator->isValid()) {
-
             $adviceManager = $this->getAdviceManager();
 
             if ($adviceManager->add($this->request->getPost('advice'))) {
-
                 $this->flashBag->set('success', 'An advice has been created successfully');
                 return $adviceManager->getLastId();
             }
 
         } else {
-
             return $formValidator->getErrors();
         }
     }

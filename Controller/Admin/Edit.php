@@ -25,14 +25,14 @@ final class Edit extends AbstractAdvice
 
         if ($advice !== false) {
             $this->loadSharedPlugins();
+            $this->loadBreadcrumbs('Edit the advice');
 
-            return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+            return $this->view->render($this->getTemplatePath(), array(
                 'title' => 'Edit the advice',
                 'advice' => $advice
-            )));
+            ));
 
         } else {
-
             return false;
         }
     }
@@ -47,15 +47,12 @@ final class Edit extends AbstractAdvice
         $formValidator = $this->getValidator($this->request->getPost('advice'));
 
         if ($formValidator->isValid()) {
-
             if ($this->getAdviceManager()->update($this->request->getPost('advice'))) {
-
                 $this->flashBag->set('success', 'The advice has been updated successfully');
                 return '1';
             }
 
         } else {
-
             return $formValidator->getErrors();
         }
     }

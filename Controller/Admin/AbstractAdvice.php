@@ -35,26 +35,15 @@ abstract class AbstractAdvice extends AbstractAdminController
     }
 
     /**
-     * Returns shared variables
+     * Loads breadcrumbs
      * 
-     * @param array $overrides
-     * @return array
+     * @param string $title
+     * @return void
      */
-    final protected function getSharedVars(array $overrides)
+    final protected function loadBreadcrumbs($title)
     {
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'link' => 'Advice:Admin:Browser@indexAction',
-                'name' => 'Advice'
-            ),
-            array(
-                'link' => '#',
-                'name' => $overrides['title']
-            )
-        ));
-
-        $vars = array();
-        return array_replace_recursive($vars, $overrides);
+        $this->view->getBreadcrumbBag()->addOne('Advice', 'Advice:Admin:Browser@indexAction')
+                                       ->addOne($title);
     }
 
     /**
@@ -65,7 +54,7 @@ abstract class AbstractAdvice extends AbstractAdminController
     final protected function loadSharedPlugins()
     {
         $this->view->getPluginBag()->load($this->getWysiwygPluginName())
-                                   ->appendScript($this->getWithAssetPath('/admin/advice.form.js'));
+                                   ->appendScript('@Advice/admin/advice.form.js');
     }
 
     /**
