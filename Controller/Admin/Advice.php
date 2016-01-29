@@ -30,7 +30,8 @@ final class Advice extends AbstractController
                    ->appendScript('@Advice/admin/browser.js');
 
         // Append a breadcrumb
-        $this->view->getBreadcrumbBag()->addOne('Advice');
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Advices');
 
         // Grab a service
         $adviceManager = $this->getModuleService('adviceManager');
@@ -40,7 +41,6 @@ final class Advice extends AbstractController
         $paginator->setUrl('/admin/module/advice/page/%s');
 
         return $this->view->render('browser', array(
-            'title' => 'Advices',
             'advices' => $adviceManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
             'paginator' => $paginator,
         ));
@@ -64,7 +64,6 @@ final class Advice extends AbstractController
                                        ->addOne($title);
 
         return $this->view->render('advice.form', array(
-            'title' => $title,
             'advice' => $advice
         ));
     }
