@@ -42,12 +42,9 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
         }
 
         if ($rand === true) {
-
             $db->orderBy()
                ->rand();
-
         } else {
-
             $db->orderBy('id')
                ->desc();
         }

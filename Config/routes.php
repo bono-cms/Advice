@@ -12,43 +12,33 @@
 return array(
     
     '/admin/module/advice' => array(
-        'controller' => 'Admin:Browser@indexAction'
+        'controller' => 'Admin:Advice@gridAction'
     ),
     
     '/admin/module/advice/page/(:var)' => array(
-        'controller' => 'Admin:Browser@indexAction'
+        'controller' => 'Admin:Advice@gridAction'
     ),
     
-    '/admin/module/advice/delete.ajax' => array(
-        'controller' => 'Admin:Browser@deleteAction',
+    '/admin/module/advice/delete' => array(
+        'controller' => 'Admin:Advice@deleteAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/advice/save.ajax' => array(
-        'controller' => 'Admin:Browser@saveAction',
-        'disallow' => array('guest')
-    ),
-    
-    '/admin/module/advice/delete-selected.ajax' => array(
-        'controller' => 'Admin:Browser@deleteSelectedAction',
+    '/admin/module/advice/tweak' => array(
+        'controller' => 'Admin:Advice@tweakAction',
         'disallow' => array('guest')
     ),
     
     '/admin/module/advice/add' => array(
-        'controller' => 'Admin:Add@indexAction'
-    ),
-    
-    '/admin/module/advice/add.ajax' => array(
-        'controller' => 'Admin:Add@addAction',
-        'disallow' => array('guest')
+        'controller' => 'Admin:Advice@addAction'
     ),
     
     '/admin/module/advice/edit/(:var)' => array(
-        'controller' => 'Admin:Edit@indexAction'
+        'controller' => 'Admin:Advice@editAction'
     ),
     
-    '/admin/module/advice/edit.ajax' => array(
-        'controller' => 'Admin:Edit@updateAction',
+    '/admin/module/advice/save' => array(
+        'controller' => 'Admin:Advice@saveAction',
         'disallow' => array('guest')
     )
 );
