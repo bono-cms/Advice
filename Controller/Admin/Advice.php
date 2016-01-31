@@ -133,7 +133,7 @@ final class Advice extends AbstractController
     {
         $input = $this->request->getPost('advice');
 
-        return $this->invokeSave('adviceManager', $input, array(
+        return $this->invokeSave('adviceManager', $input['id'], $input, array(
             'input' => array(
                 'source' => $input,
                 'definition' => array(
