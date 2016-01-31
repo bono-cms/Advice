@@ -121,28 +121,7 @@ final class Advice extends AbstractController
      */
     public function deleteAction()
     {
-        $adviceManager = $this->getModuleService('adviceManager');
-
-        // Batch removal
-        if ($this->request->hasPost('toDelete')) {
-            $ids = array_keys($this->request->getPost('toDelete'));
-
-            $adviceManager->deleteByIds($ids);
-            $this->flashBag->set('success', 'Selected advices have been removed successfully');
-        } else {
-            $this->flashBag->set('warning', 'You should select at least one advice to remove');
-        }
-
-        // Single removal
-        if ($this->request->hasPost('id')) {
-            $id = $this->request->getPost('id');
-
-            if ($adviceManager->deleteById($id)) {
-                $this->flashBag->set('success', 'Selected advice has been removed successfully');
-            }
-        }
-
-        return '1';
+        return $this->invokeRemoval('adviceManager');
     }
 
     /**
@@ -154,7 +133,7 @@ final class Advice extends AbstractController
     {
         $input = $this->request->getPost('advice');
 
-        $formValidator = $this->validatorFactory->build(array(
+        return $this->invokeSave('adviceManager', $input, array(
             'input' => array(
                 'source' => $input,
                 'definition' => array(
@@ -163,25 +142,5 @@ final class Advice extends AbstractController
                 )
             )
         ));
-
-        if ($formValidator->isValid()) {
-            $adviceManager = $this->getModuleService('adviceManager');
-
-            if ($input['id']) {
-                if ($adviceManager->update($input)) {
-                    $this->flashBag->set('success', 'The advice has been updated successfully');
-                    return '1';
-                }
-
-            } else {
-                if ($adviceManager->add($input)) {
-                    $this->flashBag->set('success', 'An advice has been created successfully');
-                    return $adviceManager->getLastId();
-                }
-            }
-
-        } else {
-            return $formValidator->getErrors();
-        }
     }
 }
