@@ -56,8 +56,8 @@ final class Advice extends AbstractController
     private function createForm(VirtualEntity $advice, $title)
     {
         // Load view plugins
-        $this->view->getPluginBag()->load($this->getWysiwygPluginName())
-                                   ->appendScript('@Advice/admin/advice.form.js');
+        $this->view->getPluginBag()
+                   ->load($this->getWysiwygPluginName());
 
         // Append breadcrumbs
         $this->view->getBreadcrumbBag()->addOne('Advice', 'Advice:Admin:Advice@gridAction')
