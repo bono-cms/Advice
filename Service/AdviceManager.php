@@ -112,6 +112,17 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
     }
 
     /**
+     * Fetches all advice entities
+     * 
+     * @param boolean $published Whether to filter by published attribute
+     * @return array
+     */
+    public function fetchAll($published)
+    {
+        return $this->prepareResults($this->adviceMapper->fetchAll($published));
+    }
+
+    /**
      * Fetches all advice entities filtered by pagination
      * 
      * @param integer $page Current page
