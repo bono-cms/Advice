@@ -94,11 +94,12 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     /**
      * Fetches all advices
      * 
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAll()
+    public function fetchAll($published)
     {
-        return $this->getSelectQuery(false)
+        return $this->getSelectQuery($published)
                     ->queryAll();
     }
 

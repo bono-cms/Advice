@@ -42,9 +42,10 @@ interface AdviceMapperInterface
     /**
      * Fetches all advices
      * 
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAll();
+    public function fetchAll($published);
 
     /**
      * Fetches an advice by its associated id
