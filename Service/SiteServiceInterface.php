@@ -14,6 +14,13 @@ namespace Advice\Service;
 interface SiteServiceInterface
 {
     /**
+     * Returns all advice entities
+     * 
+     * @return array
+     */
+    public function getAll();
+
+    /**
      * Returns random advice entity
      * 
      * @return \Krystal\Stdlib\VirtualEntity

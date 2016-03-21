@@ -32,6 +32,16 @@ final class SiteService implements SiteServiceInterface
     }
 
     /**
+     * Returns all advice entities
+     * 
+     * @return array
+     */
+    public function getAll()
+    {
+        return $this->adviceManager->fetchAll(true);
+    }
+
+    /**
      * Returns random advice entity
      * 
      * @return \Krystal\Stdlib\VirtualEntity
