@@ -41,7 +41,7 @@ final class Advice extends AbstractController
         $paginator->setUrl('/admin/module/advice/page/%s');
 
         return $this->view->render('browser', array(
-            'advices' => $adviceManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
+            'advices' => $adviceManager->fetchAllByPage($page, $this->getSharedPerPageCount(), false),
             'paginator' => $paginator,
         ));
     }

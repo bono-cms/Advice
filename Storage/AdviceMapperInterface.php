@@ -34,18 +34,10 @@ interface AdviceMapperInterface
      * 
      * @param integer $page Current page
      * @param integer $itemsPerPage Items per page count
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage);
-
-    /**
-     * Fetches all published advice filtered by pagination
-     * 
-     * @param integer $page Current page number
-     * @param integer $itemsPerPage Items per page count
-     * @return array
-     */
-    public function fetchAllPublishedByPage($page, $itemsPerPage);
+    public function fetchAllByPage($page, $itemsPerPage, $published);
 
     /**
      * Fetches all advices

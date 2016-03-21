@@ -50,9 +50,10 @@ interface AdviceManagerInterface
      * 
      * @param integer $page Current page
      * @param integer $itemsPerPage Items per page count
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage);
+    public function fetchAllByPage($page, $itemsPerPage, $published);
 
     /**
      * Returns prepared paginator's instance

@@ -81,25 +81,12 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      * 
      * @param integer $page Current page
      * @param integer $itemsPerPage Per page count
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage)
+    public function fetchAllByPage($page, $itemsPerPage, $published)
     {
-        return $this->getSelectQuery(false)
-                    ->paginate($page, $itemsPerPage)
-                    ->queryAll();
-    }
-
-    /**
-     * Fetches all published advice filtered by pagination
-     * 
-     * @param integer $page Current page number
-     * @param integer $itemsPerPage Per page count
-     * @return array
-     */
-    public function fetchAllPublishedByPage($page, $itemsPerPage)
-    {
-        return $this->getSelectQuery(true)
+        return $this->getSelectQuery($published)
                     ->paginate($page, $itemsPerPage)
                     ->queryAll();
     }

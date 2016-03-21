@@ -116,11 +116,12 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
      * 
      * @param integer $page Current page
      * @param integer $itemsPerPage Items per page count
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage)
+    public function fetchAllByPage($page, $itemsPerPage, $published)
     {
-        return $this->prepareResults($this->adviceMapper->fetchAllByPage($page, $itemsPerPage));
+        return $this->prepareResults($this->adviceMapper->fetchAllByPage($page, $itemsPerPage, $published));
     }
 
     /**
