@@ -21,7 +21,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      */
     public static function getTableName()
     {
-        return 'bono_module_advice';
+        return self::getWithPrefix('bono_module_advice');
     }
 
     /**
