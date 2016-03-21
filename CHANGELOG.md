@@ -3,7 +3,9 @@ CHANGELOG
 
 1.2
 ---
- 
+
+ * Added support for table prefix
+ * Merged `fetchAll()` with `fetchAllByPage()`
  * Improved internal structure
  * Changed module icon
 
