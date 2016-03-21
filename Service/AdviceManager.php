@@ -193,9 +193,7 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
         if ($this->adviceMapper->deleteById($id)) {
             $this->track('Advice "%s" has been removed', $title);
             return true;
-
         } else {
-
             return false;
         }
     }
