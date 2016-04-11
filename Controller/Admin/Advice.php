@@ -38,7 +38,7 @@ final class Advice extends AbstractController
 
         // Configure pagination
         $paginator = $adviceManager->getPaginator();
-        $paginator->setUrl('/admin/module/advice/page/%s');
+        $paginator->setUrl($this->createUrl('Advice:Admin:Advice@gridAction', array(), 1));
 
         return $this->view->render('browser', array(
             'advices' => $adviceManager->fetchAllByPage($page, $this->getSharedPerPageCount(), false),
