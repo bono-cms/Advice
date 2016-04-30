@@ -12,7 +12,7 @@
 return array(
  'module' => array(
   'name'    => 'Advice',
-  'url' => '/admin/module/advice',
+  'route' => 'Advice:Admin:Advice@gridAction',
   'icon'    => 'fa fa-paper-plane-o fa-5x',
   'order' => 15,
   'description' => 'Advice module allows you to manage advices on your site'
