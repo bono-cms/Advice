@@ -25,10 +25,6 @@ final class Advice extends AbstractController
      */
     public function gridAction($page = 1)
     {
-        // Load view plugins
-        $this->view->getPluginBag()
-                   ->appendScript('@Advice/admin/browser.js');
-
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Advices');
@@ -117,11 +113,12 @@ final class Advice extends AbstractController
     /**
      * Removes selected advice by its id
      * 
+     * @param string $id
      * @return string
      */
-    public function deleteAction()
+    public function deleteAction($id)
     {
-        return $this->invokeRemoval('adviceManager');
+        return $this->invokeRemoval('adviceManager', $id);
     }
 
     /**

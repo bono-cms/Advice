@@ -19,7 +19,7 @@ return array(
         'controller' => 'Admin:Advice@gridAction'
     ),
     
-    '/admin/module/advice/delete' => array(
+    '/admin/module/advice/delete/(:var)' => array(
         'controller' => 'Admin:Advice@deleteAction',
         'disallow' => array('guest')
     ),
