@@ -10,34 +10,33 @@
  */
 
 return array(
-    
-    '/admin/module/advice' => array(
+    '/%s/module/advice' => array(
         'controller' => 'Admin:Advice@gridAction'
     ),
     
-    '/admin/module/advice/page/(:var)' => array(
+    '/%s/module/advice/page/(:var)' => array(
         'controller' => 'Admin:Advice@gridAction'
     ),
     
-    '/admin/module/advice/delete/(:var)' => array(
+    '/%s/module/advice/delete/(:var)' => array(
         'controller' => 'Admin:Advice@deleteAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/advice/tweak' => array(
+    '/%s/module/advice/tweak' => array(
         'controller' => 'Admin:Advice@tweakAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/advice/add' => array(
+    '/%s/module/advice/add' => array(
         'controller' => 'Admin:Advice@addAction'
     ),
     
-    '/admin/module/advice/edit/(:var)' => array(
+    '/%s/module/advice/edit/(:var)' => array(
         'controller' => 'Admin:Advice@editAction'
     ),
     
-    '/admin/module/advice/save' => array(
+    '/%s/module/advice/save' => array(
         'controller' => 'Admin:Advice@saveAction',
         'disallow' => array('guest')
     )
