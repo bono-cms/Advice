@@ -6,10 +6,10 @@ use Krystal\Form\Element;
 ?>
 
 <form data-group="advice">
-	<div class="well clearfix">
+	<div class="well">
         <?php echo Element::hidden('advice[id]', $advice->getId()); ?>
 
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
@@ -19,14 +19,14 @@ use Krystal\Form\Element;
 			</div>
 		</div>
 
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
 			<div class="col-lg-10">
                 <?php echo Element::textarea('advice[content]', $advice->getContent(), array('data-wysiwyg' => 'true')); ?>
 			</div>
 		</div>
 
-		<div class="form-group clearfix">
+		<div class="form-group">
 			<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 			<div class="col-lg-10">
                 <?php echo Element::checkbox('advice[published]', $advice->getPublished(), array('class' => 'form-control')); ?>
