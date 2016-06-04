@@ -81,11 +81,11 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
     protected function toEntity(array $advice)
     {
         $entity = new VirtualEntity();
-        $entity->setId((int) $advice['id'])
-                ->setLangId((int) $advice['lang_id'])
-                ->setTitle(Filter::escape($advice['title']))
-                ->setContent(Filter::escapeContent($advice['content']))
-                ->setPublished((bool) $advice['published']);
+        $entity->setId($advice['id'], VirtualEntity::FILTER_INT)
+                ->setLangId($advice['lang_id'], VirtualEntity::FILTER_INT)
+                ->setTitle($advice['title'], VirtualEntity::FILTER_TAGS)
+                ->setContent($advice['content'], VirtualEntity::FILTER_SAFE_TAGS)
+                ->setPublished($advice['published'], VirtualEntity::FILTER_BOOL);
 
         return $entity;
     }
