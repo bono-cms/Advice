@@ -1,6 +1,7 @@
 <?php
 
 return array(
+ 'caption' => 'Advice',
  'name' => 'Advice',
  'route' => 'Advice:Admin:Advice@gridAction',
  'icon' => 'fa fa-paper-plane-o fa-5x',
