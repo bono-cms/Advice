@@ -118,7 +118,26 @@ final class Advice extends AbstractController
      */
     public function deleteAction($id)
     {
-        return $this->invokeRemoval('adviceManager', $id);
+        $service = $this->getModuleService('adviceManager');
+
+        // Batch removal
+        if ($this->request->hasPost('toDelete')) {
+            $ids = array_keys($this->request->getPost('toDelete'));
+
+            $service->deleteByIds($ids);
+            $this->flashBag->set('success', 'Selected elements have been removed successfully');
+
+        } else {
+            $this->flashBag->set('warning', 'You should select at least one element to remove');
+        }
+
+        // Single removal
+        if (!empty($id)) {
+            $service->deleteById($id);
+            $this->flashBag->set('success', 'Selected element has been removed successfully');
+        }
+
+        return '1';
     }
 
     /**
@@ -130,7 +149,7 @@ final class Advice extends AbstractController
     {
         $input = $this->request->getPost('advice');
 
-        return $this->invokeSave('adviceManager', $input['id'], $input, array(
+        $formValidator = $this->createValidator(array(
             'input' => array(
                 'source' => $input,
                 'definition' => array(
@@ -139,5 +158,25 @@ final class Advice extends AbstractController
                 )
             )
         ));
+
+        if ($formValidator->isValid()) {
+            $service = $this->getModuleService('adviceManager');
+
+            if (!empty($input['id'])) {
+                if ($service->update($input)) {
+                    $this->flashBag->set('success', 'The element has been updated successfully');
+                    return '1';
+                }
+
+            } else {
+                if ($service->add($input)) {
+                    $this->flashBag->set('success', 'The element has been created successfully');
+                    return $service->getLastId();
+                }
+            }
+
+        } else {
+            return $formValidator->getErrors();
+        }
     }
 }
