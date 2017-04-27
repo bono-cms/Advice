@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Added optional `icon` attribute
  * Fixed issue with quote escaping
  * Added support for table prefix
  * Merged `fetchAll()` with `fetchAllByPage()`

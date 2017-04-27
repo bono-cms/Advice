@@ -4,5 +4,6 @@ CREATE TABLE `bono_module_advice` (
 	`lang_id` INT NOT NULL,
 	`title` varchar(254) NOT NULL,
 	`content` TEXT NOT NULL,
-	`published` varchar(1) NOT NULL
+	`published` varchar(1) NOT NULL,
+    `icon` varchar(255) NOT NULL
 ) DEFAULT CHARSET = UTF8;
