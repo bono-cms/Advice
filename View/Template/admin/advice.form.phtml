@@ -1,7 +1,9 @@
-<?php defined('KRYSTAL') or die; ?>
 <?php
 
 use Krystal\Form\Element;
+use Cms\Service\LanguageManager;
+
+defined('KRYSTAL') or die;
 
 ?>
 
@@ -14,34 +16,50 @@ use Krystal\Form\Element;
     <div class="tab-content">
         <div class="tab-pane fade in active" id="advice" role="tabpanel">
             <div class="well">
-                <div class="form-group">
-                    <label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
-                    <div class="col-lg-10">
-                        <div class="input-group">
-                            <?php echo Element::text('advice[title]', $advice->getTitle(), array('class' => 'form-control', 'placeholder' => $this->translate('Advice title'))); ?>
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                <?php $this->loadPartial('language-tabs'); ?>
+                
+                <div class="tab-content">
+                    <?php foreach ($languages as $index => $language): ?>
+                    <div class="tab-pane fade in <?php echo $index == 0 ? 'active' : null; ?>" id="<?php printf('language-%s', $language->getId()); ?>" role="tabpanel">
+
+                        <?php $entity = LanguageManager::findByLangId($language->getId(), $advice); ?>
+
+                        <?php echo Element::hidden(sprintf('translation[%s][id]', $language->getId()), $entity->getId()); ?>
+                        <?php echo Element::hidden(sprintf('translation[%s][lang_id]', $language->getId()), $language->getId()); ?>
+
+                        <?php $this->loadPartial('language-name', array('language' => $language)); ?>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
+                            <div class="col-lg-10">
+                                <div class="input-group">
+                                    <?php echo Element::text(sprintf('translation[%s][title]', $language->getId()), $entity->getTitle(), array('class' => 'form-control', 'placeholder' => $this->translate('Advice title'))); ?>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
+                            <div class="col-lg-10">
+                                <?php echo Element::textarea(sprintf('translation[%s][content]', $language->getId()), $entity->getContent(), array('data-wysiwyg' => 'true')); ?>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
-                    <div class="col-lg-10">
-                        <?php echo Element::textarea('advice[content]', $advice->getContent(), array('data-wysiwyg' => 'true')); ?>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
 
         <div class="tab-pane fade" id="configuration" role="tabpanel">
-            <?php echo Element::hidden('advice[id]', $advice->getId()); ?>
+            <?php echo Element::hidden('advice[id]', $entity->getId()); ?>
 
             <div class="well">
                 <div class="form-group">
                     <label class="col-lg-2 control-label"><?php $this->show('Icon'); ?></label>
                     <div class="col-lg-10">
                         <div class="input-group">
-                            <?php echo Element::text('advice[icon]', $advice->getIcon(), array('class' => 'form-control', 'placeholder' => $this->translate('Optional icon'))); ?>
+                            <?php echo Element::text('advice[icon]', $entity->getIcon(), array('class' => 'form-control', 'placeholder' => $this->translate('Optional icon'))); ?>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
                         </div>
                     </div>
@@ -50,21 +68,21 @@ use Krystal\Form\Element;
                 <div class="form-group">
                     <label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
                     <div class="col-lg-10">
-                        <?php echo Element::checkbox('advice[published]', $advice->getPublished(), array('class' => 'form-control')); ?>
+                        <?php echo Element::checkbox('advice[published]', $entity->getPublished(), array('class' => 'form-control')); ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-	
-	<?php if ($advice->getId()): ?>
-	<button data-button="save" data-url="<?php echo $this->url('Advice:Admin:Advice@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
-	<button data-button="save-create" data-back-url="<?php echo $this->url('Advice:Admin:Advice@addAction'); ?>" data-url="<?php echo $this->url('Advice:Admin:Advice@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
-	
-	<?php else: ?>
-	<button data-button="add" data-back-url="<?php echo $this->url('Advice:Admin:Advice@editAction', null); ?>" data-url="<?php echo $this->url('Advice:Admin:Advice@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
-	<button data-button="add-create" data-url="<?php echo $this->url('Advice:Admin:Advice@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></button>
-	
-	<?php endif; ?>
-	<button data-button="cancel" data-url="<?php echo $this->url('Advice:Admin:Advice@gridAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+
+    <?php if (!$new): ?>
+    <button data-button="save" data-url="<?php echo $this->url('Advice:Admin:Advice@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+    <button data-button="save-create" data-back-url="<?php echo $this->url('Advice:Admin:Advice@addAction'); ?>" data-url="<?php echo $this->url('Advice:Admin:Advice@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
+
+    <?php else: ?>
+    <button data-button="add" data-back-url="<?php echo $this->url('Advice:Admin:Advice@editAction', null); ?>" data-url="<?php echo $this->url('Advice:Admin:Advice@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+    <button data-button="add-create" data-url="<?php echo $this->url('Advice:Admin:Advice@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></button>
+
+    <?php endif; ?>
+    <button data-button="cancel" data-url="<?php echo $this->url('Advice:Admin:Advice@gridAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
 </form>
