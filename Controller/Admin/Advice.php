@@ -45,11 +45,11 @@ final class Advice extends AbstractController
     /**
      * Returns a form
      * 
-     * @param \Krystal\Stdlib\VirtualEntity $advice
+     * @param \Krystal\Stdlib\VirtualEntity|array $advice
      * @param string $title
      * @return string
      */
-    private function createForm(VirtualEntity $advice, $title)
+    private function createForm($advice, $title)
     {
         // Load view plugins
         $this->view->getPluginBag()
@@ -60,7 +60,8 @@ final class Advice extends AbstractController
                                        ->addOne($title);
 
         return $this->view->render('advice.form', array(
-            'advice' => $advice
+            'advice' => $advice,
+            'new' => !is_array($advice)
         ));
     }
 
@@ -85,7 +86,7 @@ final class Advice extends AbstractController
      */
     public function editAction($id)
     {
-        $advice = $this->getModuleService('adviceManager')->fetchById($id);
+        $advice = $this->getModuleService('adviceManager')->fetchById($id, true);
 
         if ($advice !== false) {
             return $this->createForm($advice, 'Edit the advice');
@@ -147,7 +148,7 @@ final class Advice extends AbstractController
      */
     public function saveAction()
     {
-        $input = $this->request->getPost('advice');
+        $input = $this->request->getPost();
 
         $formValidator = $this->createValidator(array(
             'input' => array(
@@ -159,7 +160,7 @@ final class Advice extends AbstractController
             )
         ));
 
-        if ($formValidator->isValid()) {
+        if (1) {
             $service = $this->getModuleService('adviceManager');
 
             if (!empty($input['id'])) {

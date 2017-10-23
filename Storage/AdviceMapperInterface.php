@@ -48,34 +48,11 @@ interface AdviceMapperInterface
     public function fetchAll($published);
 
     /**
-     * Fetches an advice by its associated id
+     * Fetches block data by its associated id
      * 
-     * @param string $id
+     * @param string $id Block id
+     * @param boolean $withTranslations Whether to fetch translations or not
      * @return array
      */
-    public function fetchById($id);
-
-    /**
-     * Deletes an advice by its associated id
-     * 
-     * @param string $id
-     * @return boolean
-     */
-    public function deleteById($id);
-
-    /**
-     * Adds an advice
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function insert(array $input);
-
-    /**
-     * Updates an advice
-     * 
-     * @param array $input Raw input data
-     * @return boolean Depending on success
-     */
-    public function update(array $input);
+    public function fetchById($id, $withTranslations);
 }

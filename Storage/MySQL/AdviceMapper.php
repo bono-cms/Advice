@@ -25,6 +25,31 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getTranslationTable()
+    {
+        return AdviceTranslationMapper::getTableName();
+    }
+
+    /**
+     * Returns shared columns
+     * 
+     * @return array
+     */
+    private function getColumns()
+    {
+        return array(
+            self::getFullColumnName('id'),
+            self::getFullColumnName('published'),
+            self::getFullColumnName('icon'),
+            AdviceTranslationMapper::getFullColumnName('lang_id'),
+            AdviceTranslationMapper::getFullColumnName('title'),
+            AdviceTranslationMapper::getFullColumnName('content')
+        );
+    }
+
+    /**
      * Returns shared select
      * 
      * @param boolean $published
@@ -33,19 +58,18 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      */
     private function getSelectQuery($published, $rand = false)
     {
-        $db = $this->db->select('*')
-                       ->from(static::getTableName())
-                       ->whereEquals('lang_id', $this->getLangId());
+        $db = $this->createEntitySelect($this->getColumns())
+                   ->whereEquals(AdviceTranslationMapper::getFullColumnName('lang_id'), $this->getLangId());
 
         if ($published === true) {
-            $db->andWhereEquals('published', '1');
+            $db->andWhereEquals(self::getFullColumnName('published'), '1');
         }
 
         if ($rand === true) {
             $db->orderBy()
                ->rand();
         } else {
-            $db->orderBy('id')
+            $db->orderBy(self::getFullColumnName('id'))
                ->desc();
         }
 
@@ -104,14 +128,15 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     }
 
     /**
-     * Fetches an advice by its associated id
+     * Fetches block data by its associated id
      * 
-     * @param string $id Advice id
+     * @param string $id Block id
+     * @param boolean $withTranslations Whether to fetch translations or not
      * @return array
      */
-    public function fetchById($id)
+    public function fetchById($id, $withTranslations)
     {
-        return $this->findByPk($id);
+        return $this->findEntity($this->getColumns(), $id, $withTranslations);
     }
 
     /**
@@ -123,38 +148,5 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     public function fetchTitleById($id)
     {
         return $this->findColumnByPk($id, 'title');
-    }
-
-    /**
-     * Deletes an advice by its associated id
-     * 
-     * @param string $id
-     * @return boolean
-     */
-    public function deleteById($id)
-    {
-        return $this->deleteByPk($id);
-    }
-
-    /**
-     * Adds an advice
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function insert(array $input)
-    {
-        return $this->persist($this->getWithLang($input));
-    }
-
-    /**
-     * Updates an advice
-     * 
-     * @param array $input Raw input data
-     * @return boolean Depending on success
-     */
-    public function update(array $input)
-    {
-        return $this->persist($input);
     }
 }

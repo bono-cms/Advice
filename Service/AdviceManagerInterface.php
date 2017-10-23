@@ -38,12 +38,13 @@ interface AdviceManagerInterface
     public function fetchRandom();
 
     /**
-     * Fetches advice's entity by its associated id
+     * Fetches advices's entity by its associated id
      * 
      * @param string $id
-     * @return array
+     * @param boolean $withTranslations Whether to fetch translations or not
+     * @return \Krystal\Stdlib\VirtualEntity|boolean
      */
-    public function fetchById($id);
+    public function fetchById($id, $withTranslations);
 
     /**
      * Fetches all advice entities

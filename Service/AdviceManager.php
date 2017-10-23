@@ -102,14 +102,19 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
     }
 
     /**
-     * Fetches advice's entity by its associated id
+     * Fetches advices's entity by its associated id
      * 
      * @param string $id
-     * @return array
+     * @param boolean $withTranslations Whether to fetch translations or not
+     * @return \Krystal\Stdlib\VirtualEntity|boolean
      */
-    public function fetchById($id)
+    public function fetchById($id, $withTranslations)
     {
-        return $this->prepareResult($this->adviceMapper->fetchById($id));
+        if ($withTranslations == true) {
+            return $this->prepareResults($this->adviceMapper->fetchById($id, true));
+        } else {
+            return $this->prepareResult($this->adviceMapper->fetchById($id, false));
+        }
     }
 
     /**
@@ -164,8 +169,8 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
      */
     public function add(array $input)
     {
-        $this->track('Advice "%s" has been added', $input['title']);
-        return $this->adviceMapper->insert($input);
+        // $this->track('Advice "%s" has been added', $input['title']);
+        return $this->adviceMapper->saveEntity($input['advice'], $input['translation']);
     }
 
     /**
@@ -176,8 +181,8 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
      */
     public function update(array $input)
     {
-        $this->track('Advice "%s" has been updated', $input['title']);
-        return $this->adviceMapper->update($input);
+        // $this->track('Advice "%s" has been updated', $input['title']);
+        return $this->adviceMapper->saveEntity($input['advice'], $input['translation']);
     }
 
     /**
@@ -189,10 +194,10 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
     public function deleteById($id)
     {
         // Grab advice's title before we remove id
-        $title = Filter::escape($this->adviceMapper->fetchTitleById($id));
+        //$title = Filter::escape($this->adviceMapper->fetchTitleById($id));
 
-        if ($this->adviceMapper->deleteById($id)) {
-            $this->track('Advice "%s" has been removed', $title);
+        if ($this->adviceMapper->deleteEntity($id)) {
+            //$this->track('Advice "%s" has been removed', $title);
             return true;
         } else {
             return false;
@@ -207,13 +212,9 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
      */
     public function deleteByIds(array $ids)
     {
-        foreach ($ids as $id) {
-            if (!$this->adviceMapper->deleteById($id)) {
-                return false;
-            }
-        }
-
         $this->track('Batch removal of %s advices', count($ids));
+        $this->adviceMapper->deleteEntity($ids);
+
         return true;
     }
 }
