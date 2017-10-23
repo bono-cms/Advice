@@ -11,18 +11,15 @@
 
 namespace Advice\Storage\MySQL;
 
-use Cms\Storage\MySQL\AbstractStorageDropper;
+use Cms\Storage\MySQL\AbstractMapper;
 
-final class Dropper extends AbstractStorageDropper
+final class AdviceTranslationMapper extends AbstractMapper
 {
     /**
      * {@inheritDoc}
      */
-    protected function getTables()
+    public static function getTableName()
     {
-        return array(
-            AdviceMapper::getTableName(),
-            AdviceTranslationMapper::getTableName()
-        );
+        return self::getWithPrefix('bono_module_advice_translations');
     }
 }
