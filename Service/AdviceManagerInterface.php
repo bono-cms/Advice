@@ -15,12 +15,12 @@ namespace Advice\Service;
 interface AdviceManagerInterface
 {
     /**
-     * Update published state by their associated ids
+     * Update settings
      * 
-     * @param array $pair
+     * @param array $settings
      * @return boolean
      */
-    public function updatePublished(array $pair);
+    public function updateSettings(array $settings);
 
     /**
      * Delete advices by their associated ids

@@ -14,13 +14,12 @@ namespace Advice\Storage;
 interface AdviceMapperInterface
 {
     /**
-     * Updates published state by associated id
+     * Update settings
      * 
-     * @param string $id
-     * @param string $published
+     * @param array $settings
      * @return boolean
      */
-    public function updatePublishedById($id, $published);
+    public function updateSettings($settings);
 
     /**
      * Fetches a random advice

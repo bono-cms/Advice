@@ -59,20 +59,14 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
     }
 
     /**
-     * Update published state by their associated ids
+     * Update settings
      * 
-     * @param array $pair
+     * @param array $settings
      * @return boolean
      */
-    public function updatePublished(array $pair)
+    public function updateSettings(array $settings)
     {
-        foreach ($pair as $id => $published) {
-            if (!$this->adviceMapper->updatePublishedById($id, $published)) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->adviceMapper->updateSettings($settings);
     }
 
     /**

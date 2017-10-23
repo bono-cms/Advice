@@ -77,15 +77,14 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     }
 
     /**
-     * Updates published state by advice's associated id
+     * Update settings
      * 
-     * @param string $id Advice id
-     * @param string $published Either 0 or 1
+     * @param array $settings
      * @return boolean
      */
-    public function updatePublishedById($id, $published)
+    public function updateSettings($settings)
     {
-        return $this->updateColumnByPk($id, 'published', $published);
+        return $this->updateColumns($settings, array('published'));
     }
 
     /**
