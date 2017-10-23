@@ -102,13 +102,10 @@ final class Advice extends AbstractController
      */
     public function tweakAction()
     {
-        if ($this->request->hasPost('published')) {
-            $published = $this->request->getPost('published');
+        $this->getModuleService('adviceManager')->updateSettings($this->request->getPost());
 
-            $this->getModuleService('adviceManager')->updatePublished($published);
-            $this->flashBag->set('success', 'Settings have been updated successfully');
-            return '1';
-        }
+        $this->flashBag->set('success', 'Settings have been updated successfully');
+        return '1';
     }
 
     /**
