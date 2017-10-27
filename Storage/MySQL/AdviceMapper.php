@@ -127,9 +127,9 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     }
 
     /**
-     * Fetches block data by its associated id
+     * Fetches advice data by its associated id
      * 
-     * @param string $id Block id
+     * @param string $id Advice id
      * @param boolean $withTranslations Whether to fetch translations or not
      * @return array
      */
