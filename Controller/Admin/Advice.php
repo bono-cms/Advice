@@ -60,8 +60,7 @@ final class Advice extends AbstractController
                                        ->addOne($title);
 
         return $this->view->render('advice.form', array(
-            'advice' => $advice,
-            'new' => !is_array($advice)
+            'advice' => $advice
         ));
     }
 
@@ -160,7 +159,7 @@ final class Advice extends AbstractController
         if (1) {
             $service = $this->getModuleService('adviceManager');
 
-            if (!empty($input['id'])) {
+            if (!empty($input['advice']['id'])) {
                 if ($service->update($input)) {
                     $this->flashBag->set('success', 'The element has been updated successfully');
                     return '1';
