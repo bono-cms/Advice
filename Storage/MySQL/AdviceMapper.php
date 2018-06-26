@@ -40,12 +40,12 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     private function getColumns()
     {
         return array(
-            self::getFullColumnName('id'),
-            self::getFullColumnName('published'),
-            self::getFullColumnName('icon'),
-            AdviceTranslationMapper::getFullColumnName('lang_id'),
-            AdviceTranslationMapper::getFullColumnName('title'),
-            AdviceTranslationMapper::getFullColumnName('content')
+            self::column('id'),
+            self::column('published'),
+            self::column('icon'),
+            AdviceTranslationMapper::column('lang_id'),
+            AdviceTranslationMapper::column('title'),
+            AdviceTranslationMapper::column('content')
         );
     }
 
@@ -59,17 +59,17 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     private function getSelectQuery($published, $rand = false)
     {
         $db = $this->createEntitySelect($this->getColumns())
-                   ->whereEquals(AdviceTranslationMapper::getFullColumnName('lang_id'), $this->getLangId());
+                   ->whereEquals(AdviceTranslationMapper::column('lang_id'), $this->getLangId());
 
         if ($published === true) {
-            $db->andWhereEquals(self::getFullColumnName('published'), '1');
+            $db->andWhereEquals(self::column('published'), '1');
         }
 
         if ($rand === true) {
             $db->orderBy()
                ->rand();
         } else {
-            $db->orderBy(self::getFullColumnName('id'))
+            $db->orderBy(self::column('id'))
                ->desc();
         }
 
