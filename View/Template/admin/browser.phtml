@@ -34,6 +34,8 @@ defined('KRYSTAL') or die;
 <form>
     <div class="table-responsive">
         <?= Grid::render($advices, array(
+            'batch' => true,
+            'pk' => 'id',
             'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
             'columns' => array(
                 array(
