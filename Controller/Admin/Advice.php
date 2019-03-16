@@ -61,7 +61,8 @@ final class Advice extends AbstractController
                                        ->addOne($title);
 
         return $this->view->render('advice.form', array(
-            'advice' => $advice
+            'advice' => $advice,
+            'categories' => $this->getModuleService('categoryService')->fetchList()
         ));
     }
 
