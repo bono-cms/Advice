@@ -14,6 +14,7 @@ namespace Advice\Service;
 use Cms\Service\AbstractManager;
 use Advice\Storage\CategoryMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 
 final class CategoryService extends AbstractManager
 {
@@ -55,6 +56,16 @@ final class CategoryService extends AbstractManager
     public function getLastId()
     {
         return $this->categoryMapper->getMaxId();
+    }
+
+    /**
+     * Fetch categories as a list
+     * 
+     * @return array
+     */
+    public function fetchList()
+    {
+        return ArrayUtils::arrayList($this->categoryMapper->fetchAll(), 'id', 'name');
     }
 
     /**
