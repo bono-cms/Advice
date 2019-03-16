@@ -55,15 +55,21 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      * 
      * @param boolean $published
      * @param boolean $rand Whether to select random record
+     * @param int $categoryId Optional category ID constraint
      * @return \Krystal\Db\Sql\Db
      */
-    private function getSelectQuery($published, $rand = false)
+    private function getSelectQuery($published, $rand = false, $categoryId = null)
     {
         $db = $this->createEntitySelect($this->getColumns())
                    ->whereEquals(AdviceTranslationMapper::column('lang_id'), $this->getLangId());
 
         if ($published === true) {
             $db->andWhereEquals(self::column('published'), '1');
+        }
+
+        // Apply category ID constraint if provided
+        if ($categoryId !== null) {
+            $db->andWhereEquals(self::column('category_id'), $categoryId);
         }
 
         if ($rand === true) {
