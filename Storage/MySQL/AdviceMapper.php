@@ -41,6 +41,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     {
         return array(
             self::column('id'),
+            self::column('category_id'),
             self::column('published'),
             self::column('icon'),
             AdviceTranslationMapper::column('lang_id'),

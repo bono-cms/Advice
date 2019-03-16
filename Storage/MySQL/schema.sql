@@ -2,6 +2,7 @@
 DROP TABLE IF EXISTS `bono_module_advice`;
 CREATE TABLE `bono_module_advice` (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Advice ID',
+    `category_id` INT DEFAULT NULL COMMENT 'Optional category ID',
     `published` varchar(1) NOT NULL COMMENT 'Whether advice is enabled',
     `icon` varchar(255) NOT NULL COMMENT 'Optional icon'
 ) DEFAULT CHARSET = UTF8;

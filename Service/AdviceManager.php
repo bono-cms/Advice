@@ -77,6 +77,7 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
         $entity = new VirtualEntity();
         $entity->setId($advice['id'], VirtualEntity::FILTER_INT)
                 ->setLangId($advice['lang_id'], VirtualEntity::FILTER_INT)
+                ->setCategoryId($advice['category_id'], VirtualEntity::FILTER_INT)
                 ->setTitle($advice['title'], VirtualEntity::FILTER_HTML)
                 ->setIcon($advice['icon'], VirtualEntity::FILTER_HTML)
                 ->setContent($advice['content'], VirtualEntity::FILTER_SAFE_TAGS)
