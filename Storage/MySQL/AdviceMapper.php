@@ -58,7 +58,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      * @param int $categoryId Optional category ID constraint
      * @return \Krystal\Db\Sql\Db
      */
-    private function getSelectQuery($published, $rand = false, $categoryId = null)
+    private function createSelect($published, $rand = false, $categoryId = null)
     {
         // Columns to be selected
         $columns = array_merge(
@@ -113,7 +113,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      */
     public function fetchRandom()
     {
-        return $this->getSelectQuery(true, true)
+        return $this->createSelect(true, true)
                     ->limit(1)
                     ->query();
     }
@@ -128,7 +128,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      */
     public function fetchAllByPage($page, $itemsPerPage, $published)
     {
-        return $this->getSelectQuery($published)
+        return $this->createSelect($published)
                     ->paginate($page, $itemsPerPage)
                     ->queryAll();
     }
@@ -142,7 +142,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      */
     public function fetchAll($published, $categoryId = null)
     {
-        return $this->getSelectQuery($published, false, $categoryId)
+        return $this->createSelect($published, false, $categoryId)
                     ->queryAll();
     }
 
