@@ -16,9 +16,10 @@ interface SiteServiceInterface
     /**
      * Returns all advice entities
      * 
+     * @param int $categoryId Optional category ID constraint
      * @return array
      */
-    public function getAll();
+    public function getAll($categoryId = null);
 
     /**
      * Returns random advice entity
