@@ -23,4 +23,19 @@ final class CategoryMapper extends AbstractMapper implements CategoryMapperInter
     {
         return self::getWithPrefix('bono_module_advice_categories');
     }
+
+    /**
+     * Fetch all categories
+     * 
+     * @return array
+     */
+    public function fetchAll()
+    {
+        $db = $this->db->select('*')
+                       ->from(self::getTableName())
+                       ->orderBy($this->getPk())
+                       ->desc();
+
+        return $db->queryAll();
+    }
 }

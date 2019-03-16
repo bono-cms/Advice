@@ -13,5 +13,10 @@ namespace Advice\Storage;
 
 interface CategoryMapperInterface
 {
-    
+    /**
+     * Fetch all categories
+     * 
+     * @return array
+     */
+    public function fetchAll();
 }
