@@ -41,6 +41,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     {
         return array(
             self::column('id'),
+            self::column('category_id'),
             self::column('published'),
             self::column('icon'),
             AdviceTranslationMapper::column('lang_id'),
@@ -54,15 +55,33 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      * 
      * @param boolean $published
      * @param boolean $rand Whether to select random record
+     * @param int $categoryId Optional category ID constraint
      * @return \Krystal\Db\Sql\Db
      */
-    private function getSelectQuery($published, $rand = false)
+    private function createSelect($published, $rand = false, $categoryId = null)
     {
-        $db = $this->createEntitySelect($this->getColumns())
+        // Columns to be selected
+        $columns = array_merge(
+            array(
+                CategoryMapper::column('name') => 'category'
+            ),
+            $this->getColumns()
+        );
+
+        $db = $this->createEntitySelect($columns)
+                   // Category relation
+                   ->leftJoin(CategoryMapper::getTableName(), array(
+                        CategoryMapper::column('id') => self::getRawColumn('category_id')
+                   ))
                    ->whereEquals(AdviceTranslationMapper::column('lang_id'), $this->getLangId());
 
         if ($published === true) {
             $db->andWhereEquals(self::column('published'), '1');
+        }
+
+        // Apply category ID constraint if provided
+        if ($categoryId !== null) {
+            $db->andWhereEquals(self::column('category_id'), $categoryId);
         }
 
         if ($rand === true) {
@@ -94,7 +113,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      */
     public function fetchRandom()
     {
-        return $this->getSelectQuery(true, true)
+        return $this->createSelect(true, true)
                     ->limit(1)
                     ->query();
     }
@@ -109,7 +128,7 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      */
     public function fetchAllByPage($page, $itemsPerPage, $published)
     {
-        return $this->getSelectQuery($published)
+        return $this->createSelect($published)
                     ->paginate($page, $itemsPerPage)
                     ->queryAll();
     }
@@ -118,11 +137,12 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      * Fetches all advices
      * 
      * @param boolean $published Whether to filter by published attribute
+     * @param int $categoryId Optional category ID constraint
      * @return array
      */
-    public function fetchAll($published)
+    public function fetchAll($published, $categoryId = null)
     {
-        return $this->getSelectQuery($published)
+        return $this->createSelect($published, false, $categoryId)
                     ->queryAll();
     }
 

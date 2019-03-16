@@ -77,10 +77,15 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
         $entity = new VirtualEntity();
         $entity->setId($advice['id'], VirtualEntity::FILTER_INT)
                 ->setLangId($advice['lang_id'], VirtualEntity::FILTER_INT)
+                ->setCategoryId($advice['category_id'], VirtualEntity::FILTER_INT)
                 ->setTitle($advice['title'], VirtualEntity::FILTER_HTML)
                 ->setIcon($advice['icon'], VirtualEntity::FILTER_HTML)
                 ->setContent($advice['content'], VirtualEntity::FILTER_SAFE_TAGS)
                 ->setPublished($advice['published'], VirtualEntity::FILTER_BOOL);
+
+        if (isset($advice['category'])) {
+            $entity->setCategory($advice['category'], VirtualEntity::FILTER_SAFE_TAGS);
+        }
 
         return $entity;
     }
@@ -112,14 +117,15 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
     }
 
     /**
-     * Fetches all advice entities
+     * Fetches all advices
      * 
      * @param boolean $published Whether to filter by published attribute
+     * @param int $categoryId Optional category ID constraint
      * @return array
      */
-    public function fetchAll($published)
+    public function fetchAll($published, $categoryId = null)
     {
-        return $this->prepareResults($this->adviceMapper->fetchAll($published));
+        return $this->prepareResults($this->adviceMapper->fetchAll($published, $categoryId));
     }
 
     /**

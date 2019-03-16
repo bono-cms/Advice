@@ -47,12 +47,13 @@ interface AdviceManagerInterface
     public function fetchById($id, $withTranslations);
 
     /**
-     * Fetches all advice entities
+     * Fetches all advices
      * 
      * @param boolean $published Whether to filter by published attribute
+     * @param int $categoryId Optional category ID constraint
      * @return array
      */
-    public function fetchAll($published);
+    public function fetchAll($published, $categoryId = null);
 
     /**
      * Fetches advice entities filtered by pagination

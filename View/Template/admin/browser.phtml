@@ -17,6 +17,7 @@ defined('KRYSTAL') or die;
 
           <div class="dropdown-menu">
              <a class="dropdown-item" href="<?= $this->url('Advice:Admin:Advice@addAction'); ?>"><?php $this->show('Add new advice'); ?></a>
+             <a class="dropdown-item" href="<?= $this->url('Advice:Admin:Category@addAction'); ?>"><?php $this->show('Add new category'); ?></a>
              <div class="dropdown-header"><?php $this->show('Actions'); ?></div>
              <?php if (!empty($advices)): ?>
              <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url('Advice:Admin:Advice@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
@@ -36,7 +37,7 @@ defined('KRYSTAL') or die;
             <?= $this->widget(new GridViewWidget($advices, array(
                 'batch' => true,
                 'pk' => 'id',
-                'tableClass' => 'table table-hover table-bordered table-striped table-sm',
+                'tableClass' => 'table table-hover table-bordered table-striped',
                 'columns' => array(
                     array(
                         'column' => 'id',
@@ -44,7 +45,12 @@ defined('KRYSTAL') or die;
                     ),
 
                     array(
-                        'column' => 'title',
+                        'column' => 'title'
+                    ),
+
+                    array(
+                        'column' => 'category',
+                        'hidden' => empty($categories)
                     ),
 
                     array(
@@ -84,3 +90,39 @@ defined('KRYSTAL') or die;
     <?php $this->loadPartial('paginator'); ?>
 
 </div>
+
+<?php if (!empty($categories)): ?>
+<div class="card">
+    <h3><?php $this->show('Categories'); ?> <small class="text-muted">(<?= count($categories); ?>)</small></h3>
+
+    <?= $this->widget(new GridViewWidget($categories, array(
+        'tableClass' => 'table table-hover table-bordered table-striped',
+        'columns' => array(
+            array(
+                'column' => 'id',
+                'label' => '#'
+            ),
+
+            array(
+                'column' => 'name'
+            )
+        ),
+
+        'actions' => array(
+            'edit' => function($row){
+                return Icon::edit(
+                    $this->url('Advice:Admin:Category@editAction', $row['id']),
+                    $this->translate('Edit this category')
+                );
+            },
+
+            'remove' => function($row){
+                return Icon::remove(
+                    $this->url('Advice:Admin:Category@deleteAction', $row['id']),
+                    $this->translate('Remove this advice')
+                );
+            }
+        )
+    ))); ?>
+</div>
+<?php endif; ?>

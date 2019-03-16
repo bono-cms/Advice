@@ -34,11 +34,12 @@ final class SiteService implements SiteServiceInterface
     /**
      * Returns all advice entities
      * 
+     * @param int $categoryId Optional category ID constraint
      * @return array
      */
-    public function getAll()
+    public function getAll($categoryId = null)
     {
-        return $this->adviceManager->fetchAll(true);
+        return $this->adviceManager->fetchAll(true, $categoryId);
     }
 
     /**

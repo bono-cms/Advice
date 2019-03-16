@@ -39,5 +39,24 @@ return array(
     '/%s/module/advice/save' => array(
         'controller' => 'Admin:Advice@saveAction',
         'disallow' => array('guest')
+    ),
+    
+    // Category
+    '/%s/module/advice/category/add' => array(
+        'controller' => 'Admin:Category@addAction'
+    ),
+
+    '/%s/module/advice/category/edit/(:var)' => array(
+        'controller' => 'Admin:Category@editAction'
+    ),
+
+    '/%s/module/advice/category/save' => array(
+        'controller' => 'Admin:Category@saveAction',
+        'disallow' => array('guest')
+    ),
+
+    '/%s/module/advice/category/delete/(:var)' => array(
+        'controller' => 'Admin:Category@deleteAction',
+        'disallow' => array('guest')
     )
 );

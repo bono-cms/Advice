@@ -39,6 +39,7 @@ final class Advice extends AbstractController
         return $this->view->render('browser', array(
             'advices' => $adviceManager->fetchAllByPage($page, $this->getSharedPerPageCount(), false),
             'paginator' => $paginator,
+            'categories' => $this->getModuleService('categoryService')->fetchAll()
         ));
     }
 
@@ -60,7 +61,8 @@ final class Advice extends AbstractController
                                        ->addOne($title);
 
         return $this->view->render('advice.form', array(
-            'advice' => $advice
+            'advice' => $advice,
+            'categories' => $this->getModuleService('categoryService')->fetchList()
         ));
     }
 
