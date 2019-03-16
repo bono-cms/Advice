@@ -13,3 +13,9 @@ CREATE TABLE `bono_module_advice_translations` (
     `title` varchar(255) NOT NULL COMMENT 'Advice title',
     `content` LONGTEXT NOT NULL COMMENT 'Advice description'
 ) DEFAULT CHARSET = UTF8;
+
+DROP TABLE IF EXISTS `bono_module_advice_categories`;
+CREATE TABLE `bono_module_advice_categories` (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Category ID',
+    `name` varchar(255) NOT NULL COMMENT 'Category name'
+) DEFAULT CHARSET = UTF8;
