@@ -17,6 +17,7 @@ defined('KRYSTAL') or die;
 
           <div class="dropdown-menu">
              <a class="dropdown-item" href="<?= $this->url('Advice:Admin:Advice@addAction'); ?>"><?php $this->show('Add new advice'); ?></a>
+             <a class="dropdown-item" href="<?= $this->url('Advice:Admin:Category@addAction'); ?>"><?php $this->show('Add new category'); ?></a>
              <div class="dropdown-header"><?php $this->show('Actions'); ?></div>
              <?php if (!empty($advices)): ?>
              <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url('Advice:Admin:Advice@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
