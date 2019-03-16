@@ -60,7 +60,19 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
      */
     private function getSelectQuery($published, $rand = false, $categoryId = null)
     {
-        $db = $this->createEntitySelect($this->getColumns())
+        // Columns to be selected
+        $columns = array_merge(
+            array(
+                CategoryMapper::column('name') => 'category'
+            ),
+            $this->getColumns()
+        );
+
+        $db = $this->createEntitySelect($columns)
+                   // Category relation
+                   ->leftJoin(CategoryMapper::getTableName(), array(
+                        CategoryMapper::column('id') => self::getRawColumn('category_id')
+                   ))
                    ->whereEquals(AdviceTranslationMapper::column('lang_id'), $this->getLangId());
 
         if ($published === true) {

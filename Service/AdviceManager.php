@@ -83,6 +83,10 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
                 ->setContent($advice['content'], VirtualEntity::FILTER_SAFE_TAGS)
                 ->setPublished($advice['published'], VirtualEntity::FILTER_BOOL);
 
+        if (isset($advice['category'])) {
+            $entity->setCategory($advice['category'], VirtualEntity::FILTER_SAFE_TAGS);
+        }
+
         return $entity;
     }
 
