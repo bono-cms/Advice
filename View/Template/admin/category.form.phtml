@@ -1,0 +1,29 @@
+<?php
+
+use Krystal\Form\Element;
+defined('KRYSTAL') or die;
+
+?>
+
+<form class="card" data-group="category" autocomplete="off">
+    <?php echo Element::hidden('category[id]', $category->getId()); ?>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+        <div class="col-lg-10">
+            <div class="input-group">
+                <?php echo Element::text('category[name]', $category->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('Name of this category'))); ?>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <?php $this->loadPartial('actions', array(
+        'new' => !$category->getId(),
+        'add' => 'Advice:Admin:Category@addAction',
+        'edit' => 'Advice:Admin:Category@editAction',
+        'save' => 'Advice:Admin:Category@saveAction',
+        'cancel' => 'Advice:Admin:Advice@gridAction'
+    )); ?>
+
+</form>
