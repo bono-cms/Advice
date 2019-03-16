@@ -91,6 +91,7 @@ defined('KRYSTAL') or die;
 
 </div>
 
+<?php if (!empty($categories)): ?>
 <div class="card">
     <h3><?php $this->show('Categories'); ?> <small class="text-muted">(<?= count($categories); ?>)</small></h3>
 
@@ -123,11 +124,5 @@ defined('KRYSTAL') or die;
             }
         )
     ))); ?>
-
-    <?php if (empty($categories)): ?>
-    <div class="center-block">
-        <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No categories'); ?></h2>
-    </div>
-    <?php endif; ?>
-
 </div>
+<?php endif; ?>
