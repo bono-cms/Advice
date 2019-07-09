@@ -8,28 +8,22 @@ defined('KRYSTAL') or die;
 
 ?>
 
+<div class="btn-toolbar">
+    <?php $this->loadPartial('menu', array(
+        'items' => array(
+            'Advice:Admin:Advice@addAction' => 'Add new advice',
+            'Advice:Admin:Category@addAction' => 'Add new category'
+        ),
+
+        'actions' => array(
+            'data' => $advices,
+            'save' => 'Advice:Admin:Advice@tweakAction',
+            'delete' => 'Advice:Admin:Advice@deleteAction'
+        )
+    )); ?>
+</div>
+
 <div class="card">
-    <div class="btn-toolbar">
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-            <i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
-          </button>
-
-          <div class="dropdown-menu">
-             <a class="dropdown-item" href="<?= $this->url('Advice:Admin:Advice@addAction'); ?>"><?php $this->show('Add new advice'); ?></a>
-             <a class="dropdown-item" href="<?= $this->url('Advice:Admin:Category@addAction'); ?>"><?php $this->show('Add new category'); ?></a>
-             <div class="dropdown-header"><?php $this->show('Actions'); ?></div>
-             <?php if (!empty($advices)): ?>
-             <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url('Advice:Admin:Advice@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a></li>
-             <a class="dropdown-item" href="#" data-button="remove-selected" data-url="<?php echo $this->url('Advice:Admin:Advice@deleteAction', null); ?>"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a></li>
-             <?php else: ?>
-             <a class="dropdown-item disabled"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
-             <a class="dropdown-item disabled"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a>>
-             <?php endif; ?>
-          </div>
-        </div>
-    </div>
-
     <?php $this->loadPartial('items-per-page', array('caption' => 'Advices')); ?>
 
     <form>
