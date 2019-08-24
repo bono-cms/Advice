@@ -90,7 +90,8 @@ final class Advice extends AbstractController
         $advice = $this->getModuleService('adviceManager')->fetchById($id, true);
 
         if ($advice !== false) {
-            return $this->createForm($advice, 'Edit the advice');
+            $name = $this->getCurrentProperty($advice, 'title');
+            return $this->createForm($advice, $this->translator->translate('Edit the advice "%s"', $name));
         } else {
             return false;
         }

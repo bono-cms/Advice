@@ -19,15 +19,16 @@ final class Category extends AbstractController
     /**
      * Creates form
      * 
-     * @param mixed $category
+     * @param \Krystal\Stdlib\VirtualEntity $category
+     * @param string $title Page title
      * @return string
      */
-    private function createForm($category)
+    private function createForm(VirtualEntity $category, $title)
     {
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Advices', 'Advice:Admin:Advice@gridAction')
-                   ->addOne(is_array($category) ? 'Edit the category' : 'Add a category');
+                   ->addOne($title);
 
         return $this->view->render('category.form', array(
             'category' => $category
@@ -41,7 +42,7 @@ final class Category extends AbstractController
      */
     public function addAction()
     {
-        return $this->createForm(new VirtualEntity);
+        return $this->createForm(new VirtualEntity, 'Add a category');
     }
 
     /**
@@ -55,7 +56,7 @@ final class Category extends AbstractController
         $category = $this->getModuleService('categoryService')->fetchById($id);
 
         if ($category !== false) {
-            return $this->createForm($category);
+            return $this->createForm($category, $this->translator->translate('Edit the category "%s"', $category->getName()));
         } else {
             return false;
         }
