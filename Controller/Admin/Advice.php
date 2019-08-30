@@ -118,6 +118,7 @@ final class Advice extends AbstractController
      */
     public function deleteAction($id)
     {
+        $historyService = $this->getService('Cms', 'historyManager');
         $service = $this->getModuleService('adviceManager');
 
         // Batch removal
@@ -127,14 +128,19 @@ final class Advice extends AbstractController
             $service->deleteByIds($ids);
             $this->flashBag->set('success', 'Selected elements have been removed successfully');
 
+            $historyService->write('Advice', 'Batch removal of %s advices', count($ids));
         } else {
             $this->flashBag->set('warning', 'You should select at least one element to remove');
         }
 
         // Single removal
         if (!empty($id)) {
+            $advice = $this->getModuleService('adviceManager')->fetchById($id, false);
+
             $service->deleteById($id);
             $this->flashBag->set('success', 'Selected element has been removed successfully');
+
+            $historyService->write('Advice', 'Advice "%s" has been removed', $advice->getTitle());
         }
 
         return '1';
@@ -161,16 +167,23 @@ final class Advice extends AbstractController
 
         if (1) {
             $service = $this->getModuleService('adviceManager');
+            $historyService = $this->getService('Cms', 'historyManager');
+            // Current announce name
+            $name = $this->getCurrentProperty($this->request->getPost('translation'), 'title');
 
             if (!empty($input['advice']['id'])) {
                 if ($service->update($input)) {
                     $this->flashBag->set('success', 'The element has been updated successfully');
+
+                    $historyService->write('Advice', 'Advice "%s" has been updated', $name);
                     return '1';
                 }
 
             } else {
                 if ($service->add($input)) {
                     $this->flashBag->set('success', 'The element has been created successfully');
+
+                    $historyService->write('Advice', 'Advice "%s" has been added', $name);
                     return $service->getLastId();
                 }
             }

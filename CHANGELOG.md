@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Moved history tracker of out main service into the main controller
  * Support complete internalization
  * Added optional `icon` attribute
  * Fixed issue with quote escaping

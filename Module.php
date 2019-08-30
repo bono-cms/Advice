@@ -23,7 +23,7 @@ final class Module extends AbstractCmsModule
      */
     public function getServiceProviders()
     {
-        $adviceManager = new AdviceManager($this->getMapper('/Advice/Storage/MySQL/AdviceMapper'), $this->getHistoryManager());
+        $adviceManager = new AdviceManager($this->getMapper('/Advice/Storage/MySQL/AdviceMapper'));
         $siteService = new SiteService($adviceManager);
         $categoryService = new CategoryService($this->getMapper('/Advice/Storage/MySQL/CategoryMapper'));
 

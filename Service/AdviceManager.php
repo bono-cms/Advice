@@ -27,35 +27,14 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
     private $adviceMapper;
 
     /**
-     * History manager to keep track of latest actions
-     * 
-     * @var \Cms\Storage\HistoryManagerInterface
-     */
-    private $historyManager;
-
-    /**
      * State initialization
      * 
      * @param \Advice\Storage\AdviceMapperInterface $adviceMapper
-     * @param \Cms\Service\HistoryManagerInterface $historyManager
      * @return void
      */
-    public function __construct(AdviceMapperInterface $adviceMapper, HistoryManagerInterface $historyManager)
+    public function __construct(AdviceMapperInterface $adviceMapper)
     {
         $this->adviceMapper = $adviceMapper;
-        $this->historyManager = $historyManager;
-    }
-
-    /**
-     * Tracks activity
-     * 
-     * @param string $message
-     * @param string $placeholder
-     * @return boolean
-     */
-    private function track($message, $placeholder)
-    {
-        return $this->historyManager->write('Advice', $message, $placeholder);
     }
 
     /**
@@ -169,7 +148,6 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
      */
     public function add(array $input)
     {
-        // $this->track('Advice "%s" has been added', $input['title']);
         return $this->adviceMapper->saveEntity($input['advice'], $input['translation']);
     }
 
@@ -181,7 +159,6 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
      */
     public function update(array $input)
     {
-        // $this->track('Advice "%s" has been updated', $input['title']);
         return $this->adviceMapper->saveEntity($input['advice'], $input['translation']);
     }
 
@@ -193,15 +170,7 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
      */
     public function deleteById($id)
     {
-        // Grab advice's title before we remove id
-        //$title = Filter::escape($this->adviceMapper->fetchTitleById($id));
-
-        if ($this->adviceMapper->deleteEntity($id)) {
-            //$this->track('Advice "%s" has been removed', $title);
-            return true;
-        } else {
-            return false;
-        }
+        return $this->adviceMapper->deleteEntity($id);
     }
 
     /**
@@ -212,9 +181,6 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
      */
     public function deleteByIds(array $ids)
     {
-        $this->track('Batch removal of %s advices', count($ids));
-        $this->adviceMapper->deleteEntity($ids);
-
-        return true;
+        return $this->adviceMapper->deleteEntity($ids);
     }
 }
