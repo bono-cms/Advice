@@ -17,7 +17,7 @@ use Advice\Storage\AdviceMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Security\Filter;
 
-final class AdviceManager extends AbstractManager implements AdviceManagerInterface
+final class AdviceManager extends AbstractManager
 {
     /**
      * Any compliant advice mapper
@@ -146,18 +146,7 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
      * @param array $input Raw input data
      * @return boolean
      */
-    public function add(array $input)
-    {
-        return $this->adviceMapper->saveEntity($input['advice'], $input['translation']);
-    }
-
-    /**
-     * Updates an advice
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function update(array $input)
+    public function save(array $input)
     {
         return $this->adviceMapper->saveEntity($input['advice'], $input['translation']);
     }
@@ -165,22 +154,11 @@ final class AdviceManager extends AbstractManager implements AdviceManagerInterf
     /**
      * Deletes an advice by its associated id
      * 
-     * @param string $id Advice id
+     * @param string|array $id Advice id
      * @return boolean
      */
-    public function deleteById($id)
+    public function delete($id)
     {
         return $this->adviceMapper->deleteEntity($id);
-    }
-
-    /**
-     * Delete advices by their associated ids
-     * 
-     * @param array $ids
-     * @return boolean
-     */
-    public function deleteByIds(array $ids)
-    {
-        return $this->adviceMapper->deleteEntity($ids);
     }
 }

@@ -125,7 +125,7 @@ final class Advice extends AbstractController
         if ($this->request->hasPost('batch')) {
             $ids = array_keys($this->request->getPost('batch'));
 
-            $service->deleteByIds($ids);
+            $service->delete($ids);
             $this->flashBag->set('success', 'Selected elements have been removed successfully');
 
             $historyService->write('Advice', 'Batch removal of %s advices', count($ids));
@@ -137,7 +137,7 @@ final class Advice extends AbstractController
         if (!empty($id)) {
             $advice = $this->getModuleService('adviceManager')->fetchById($id, false);
 
-            $service->deleteById($id);
+            $service->delete($id);
             $this->flashBag->set('success', 'Selected element has been removed successfully');
 
             $historyService->write('Advice', 'Advice "%s" has been removed', $advice->getTitle());
@@ -171,21 +171,20 @@ final class Advice extends AbstractController
             // Current announce name
             $name = $this->getCurrentProperty($this->request->getPost('translation'), 'title');
 
-            if (!empty($input['advice']['id'])) {
-                if ($service->update($input)) {
-                    $this->flashBag->set('success', 'The element has been updated successfully');
+            // Save an advice
+            $service->save($input);
 
-                    $historyService->write('Advice', 'Advice "%s" has been updated', $name);
-                    return '1';
-                }
+            if (!empty($input['advice']['id'])) {
+                $this->flashBag->set('success', 'The element has been updated successfully');
+
+                $historyService->write('Advice', 'Advice "%s" has been updated', $name);
+                return '1';
 
             } else {
-                if ($service->add($input)) {
-                    $this->flashBag->set('success', 'The element has been created successfully');
+                $this->flashBag->set('success', 'The element has been created successfully');
 
-                    $historyService->write('Advice', 'Advice "%s" has been added', $name);
-                    return $service->getLastId();
-                }
+                $historyService->write('Advice', 'Advice "%s" has been added', $name);
+                return $service->getLastId();
             }
 
         } else {

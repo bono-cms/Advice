@@ -11,22 +11,22 @@
 
 namespace Advice\Service;
 
-final class SiteService implements SiteServiceInterface
+final class SiteService
 {
     /**
      * Advice manager service
      * 
-     * @var \Advice\Service\AdviceManagerInterface
+     * @var \Advice\Service\AdviceManager
      */
     private $adviceManager;
 
     /**
      * State initialization
      * 
-     * @param \Advice\Service\AdviceManagerInterface $adviceManager
+     * @param \Advice\Service\AdviceManager $adviceManager
      * @return void
      */
-    public function __construct(AdviceManagerInterface $adviceManager)
+    public function __construct(AdviceManager $adviceManager)
     {
         $this->adviceManager = $adviceManager;
     }
