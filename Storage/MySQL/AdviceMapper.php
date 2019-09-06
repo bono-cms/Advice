@@ -157,15 +157,4 @@ final class AdviceMapper extends AbstractMapper implements AdviceMapperInterface
     {
         return $this->findEntity($this->getColumns(), $id, $withTranslations);
     }
-
-    /**
-     * Fetches advice's title by its associated id
-     * 
-     * @param string $id Advice id
-     * @return string
-     */
-    public function fetchTitleById($id)
-    {
-        return $this->findColumnByPk($id, 'title');
-    }
 }
